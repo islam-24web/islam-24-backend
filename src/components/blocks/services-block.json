@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_blocks_services_blocks",
+  "info": {
+    "displayName": "Services Block",
+    "icon": "apps",
+    "description": "Grid of services or features"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "blocks.service-item"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_blocks_service_items",
+  "info": {
+    "displayName": "Service Item",
+    "icon": "bulletList",
+    "description": "Individual service entry"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "icon": {
+      "type": "string"
+    }
+  }
+}
