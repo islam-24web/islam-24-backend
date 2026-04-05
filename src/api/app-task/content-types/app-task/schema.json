@@ -55,6 +55,15 @@
       "relation": "manyToOne",
       "target": "api::app-category.app-category",
       "inversedBy": "app_tasks"
+    },
+    "priority": {
+      "type": "enumeration",
+      "default": "med",
+      "enum": [
+        "high",
+        "med",
+        "low"
+      ]
     }
   }
 }

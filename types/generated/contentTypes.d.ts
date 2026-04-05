@@ -733,6 +733,8 @@ export interface ApiAppTaskAppTask extends Struct.CollectionTypeSchema {
     order: Schema.Attribute.Integer;
     period: Schema.Attribute.Enumeration<['today', 'week', 'month', 'year']> &
       Schema.Attribute.DefaultTo<'today'>;
+    priority: Schema.Attribute.Enumeration<['high', 'med', 'low']> &
+      Schema.Attribute.DefaultTo<'med'>;
     publishedAt: Schema.Attribute.DateTime;
     reward: Schema.Attribute.String;
     source: Schema.Attribute.String;
