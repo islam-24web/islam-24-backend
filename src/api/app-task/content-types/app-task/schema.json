@@ -1,0 +1,60 @@
+{
+  "kind": "collectionType",
+  "collectionName": "app_tasks",
+  "info": {
+    "singularName": "app-task",
+    "pluralName": "app-tasks",
+    "displayName": "App Task"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "reward": {
+      "type": "string"
+    },
+    "hadith": {
+      "type": "text"
+    },
+    "source": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "timeLabel": {
+      "type": "string"
+    },
+    "period": {
+      "type": "enumeration",
+      "default": "today",
+      "enum": [
+        "today",
+        "week",
+        "month",
+        "year"
+      ]
+    },
+    "order": {
+      "type": "integer"
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::app-category.app-category",
+      "inversedBy": "app_tasks"
+    }
+  }
+}

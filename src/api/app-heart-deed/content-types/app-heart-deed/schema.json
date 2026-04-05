@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "app_heart_deeds",
+  "info": {
+    "singularName": "app-heart-deed",
+    "pluralName": "app-heart-deeds",
+    "displayName": "App Heart Deed"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "num": {
+      "type": "integer"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "icon": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "practice": {
+      "type": "text"
+    },
+    "detail": {
+      "type": "text"
+    },
+    "order": {
+      "type": "integer"
+    }
+  }
+}

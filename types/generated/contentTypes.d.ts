@@ -430,6 +430,286 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAppCategoryAppCategory extends Struct.CollectionTypeSchema {
+  collectionName: 'app_categories';
+  info: {
+    displayName: 'App Category';
+    pluralName: 'app-categories';
+    singularName: 'app-category';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    app_tasks: Schema.Attribute.Relation<'oneToMany', 'api::app-task.app-task'>;
+    color: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    domain: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::app-domain.app-domain'
+    >;
+    icon: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::app-category.app-category'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    order: Schema.Attribute.Integer;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'name'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiAppDhikrAppDhikr extends Struct.CollectionTypeSchema {
+  collectionName: 'app_dhikrs';
+  info: {
+    displayName: 'App Dhikr';
+    pluralName: 'app-dhikrs';
+    singularName: 'app-dhikr';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    count: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<1>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    label: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::app-dhikr.app-dhikr'
+    > &
+      Schema.Attribute.Private;
+    order: Schema.Attribute.Integer;
+    publishedAt: Schema.Attribute.DateTime;
+    text: Schema.Attribute.Text & Schema.Attribute.Required;
+    type: Schema.Attribute.Enumeration<
+      ['morning', 'evening', 'after_salah', 'sleep', 'general']
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiAppDivineNameAppDivineName
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'app_divine_names';
+  info: {
+    displayName: 'App Divine Name';
+    pluralName: 'app-divine-names';
+    singularName: 'app-divine-name';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    explanation: Schema.Attribute.RichText;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::app-divine-name.app-divine-name'
+    > &
+      Schema.Attribute.Private;
+    meaning: Schema.Attribute.String;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    order: Schema.Attribute.Integer;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiAppDomainAppDomain extends Struct.CollectionTypeSchema {
+  collectionName: 'app_domains';
+  info: {
+    displayName: 'App Domain';
+    pluralName: 'app-domains';
+    singularName: 'app-domain';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    app_categories: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::app-category.app-category'
+    >;
+    color: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    icon: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::app-domain.app-domain'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    order: Schema.Attribute.Integer;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'name'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiAppHeartDeedAppHeartDeed
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'app_heart_deeds';
+  info: {
+    displayName: 'App Heart Deed';
+    pluralName: 'app-heart-deeds';
+    singularName: 'app-heart-deed';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    detail: Schema.Attribute.Text;
+    icon: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::app-heart-deed.app-heart-deed'
+    > &
+      Schema.Attribute.Private;
+    num: Schema.Attribute.Integer;
+    order: Schema.Attribute.Integer;
+    practice: Schema.Attribute.Text;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiAppLectureAppLecture extends Struct.CollectionTypeSchema {
+  collectionName: 'app_lectures';
+  info: {
+    displayName: 'App Lecture';
+    pluralName: 'app-lectures';
+    singularName: 'app-lecture';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::app-lecture.app-lecture'
+    > &
+      Schema.Attribute.Private;
+    order: Schema.Attribute.Integer;
+    publishedAt: Schema.Attribute.DateTime;
+    subtitle: Schema.Attribute.String;
+    tags: Schema.Attribute.JSON;
+    thumbnail: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    youtubeId: Schema.Attribute.String;
+  };
+}
+
+export interface ApiAppMaqamAppMaqam extends Struct.CollectionTypeSchema {
+  collectionName: 'app_maqams';
+  info: {
+    displayName: 'App Maqam';
+    pluralName: 'app-maqams';
+    singularName: 'app-maqam';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    explanation: Schema.Attribute.RichText;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::app-maqam.app-maqam'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    num: Schema.Attribute.Integer;
+    order: Schema.Attribute.Integer;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiAppTaskAppTask extends Struct.CollectionTypeSchema {
+  collectionName: 'app_tasks';
+  info: {
+    displayName: 'App Task';
+    pluralName: 'app-tasks';
+    singularName: 'app-task';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    category: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::app-category.app-category'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    hadith: Schema.Attribute.Text;
+    icon: Schema.Attribute.String;
+    isActive: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::app-task.app-task'
+    > &
+      Schema.Attribute.Private;
+    order: Schema.Attribute.Integer;
+    period: Schema.Attribute.Enumeration<['today', 'week', 'month', 'year']> &
+      Schema.Attribute.DefaultTo<'today'>;
+    publishedAt: Schema.Attribute.DateTime;
+    reward: Schema.Attribute.String;
+    source: Schema.Attribute.String;
+    timeLabel: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
   collectionName: 'articles';
   info: {
@@ -1143,6 +1423,14 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::app-category.app-category': ApiAppCategoryAppCategory;
+      'api::app-dhikr.app-dhikr': ApiAppDhikrAppDhikr;
+      'api::app-divine-name.app-divine-name': ApiAppDivineNameAppDivineName;
+      'api::app-domain.app-domain': ApiAppDomainAppDomain;
+      'api::app-heart-deed.app-heart-deed': ApiAppHeartDeedAppHeartDeed;
+      'api::app-lecture.app-lecture': ApiAppLectureAppLecture;
+      'api::app-maqam.app-maqam': ApiAppMaqamAppMaqam;
+      'api::app-task.app-task': ApiAppTaskAppTask;
       'api::article.article': ApiArticleArticle;
       'api::category.category': ApiCategoryCategory;
       'api::footer.footer': ApiFooterFooter;

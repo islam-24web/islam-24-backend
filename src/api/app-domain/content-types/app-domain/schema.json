@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "app_domains",
+  "info": {
+    "singularName": "app-domain",
+    "pluralName": "app-domains",
+    "displayName": "App Domain"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "color": {
+      "type": "string"
+    },
+    "order": {
+      "type": "integer"
+    },
+    "app_categories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::app-category.app-category",
+      "mappedBy": "domain"
+    }
+  }
+}
