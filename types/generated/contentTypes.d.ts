@@ -668,6 +668,40 @@ export interface ApiAppMaqamAppMaqam extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAppSettingAppSetting extends Struct.SingleTypeSchema {
+  collectionName: 'app_settings';
+  info: {
+    displayName: 'App Setting';
+    pluralName: 'app-settings';
+    singularName: 'app-setting';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    appName: Schema.Attribute.String;
+    appVersion: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::app-setting.app-setting'
+    > &
+      Schema.Attribute.Private;
+    maintenanceMode: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    openingRef: Schema.Attribute.String;
+    openingVerse: Schema.Attribute.Text;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    welcomeMessage: Schema.Attribute.Text;
+  };
+}
+
 export interface ApiAppTaskAppTask extends Struct.CollectionTypeSchema {
   collectionName: 'app_tasks';
   info: {
@@ -1430,6 +1464,7 @@ declare module '@strapi/strapi' {
       'api::app-heart-deed.app-heart-deed': ApiAppHeartDeedAppHeartDeed;
       'api::app-lecture.app-lecture': ApiAppLectureAppLecture;
       'api::app-maqam.app-maqam': ApiAppMaqamAppMaqam;
+      'api::app-setting.app-setting': ApiAppSettingAppSetting;
       'api::app-task.app-task': ApiAppTaskAppTask;
       'api::article.article': ApiArticleArticle;
       'api::category.category': ApiCategoryCategory;
