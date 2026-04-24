@@ -1,0 +1,119 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_profiles",
+  "info": {
+    "singularName": "user-profile",
+    "pluralName": "user-profiles",
+    "displayName": "User Profile",
+    "description": "Profile for each user — linked to Firebase UID"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "firebaseUid": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "displayName": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email"
+    },
+    "photoURL": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string",
+      "default": "SA"
+    },
+    "language": {
+      "type": "string",
+      "default": "ar"
+    },
+    "totalPoints": {
+      "type": "integer",
+      "default": 0
+    },
+    "weeklyPoints": {
+      "type": "integer",
+      "default": 0
+    },
+    "monthlyPoints": {
+      "type": "integer",
+      "default": 0
+    },
+    "tasbihTotal": {
+      "type": "biginteger",
+      "default": "0"
+    },
+    "tasbihToday": {
+      "type": "integer",
+      "default": 0
+    },
+    "streak": {
+      "type": "integer",
+      "default": 0
+    },
+    "longestStreak": {
+      "type": "integer",
+      "default": 0
+    },
+    "currentRankLevel": {
+      "type": "integer",
+      "default": 1,
+      "min": 1,
+      "max": 5
+    },
+    "deedsCompletedToday": {
+      "type": "integer",
+      "default": 0
+    },
+    "deedsCompletedTotal": {
+      "type": "integer",
+      "default": 0
+    },
+    "namesPrayed": {
+      "type": "json"
+    },
+    "heartDeedsDone": {
+      "type": "json"
+    },
+    "maqamsDone": {
+      "type": "json"
+    },
+    "watchedLectures": {
+      "type": "json"
+    },
+    "lastActiveAt": {
+      "type": "datetime"
+    },
+    "weekStartedAt": {
+      "type": "datetime"
+    },
+    "monthStartedAt": {
+      "type": "datetime"
+    },
+    "isPublic": {
+      "type": "boolean",
+      "default": true
+    },
+    "notificationsEnabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "pushToken": {
+      "type": "string",
+      "private": true
+    },
+    "achievements": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::achievement.achievement"
+    }
+  }
+}

@@ -4,66 +4,110 @@
   "info": {
     "singularName": "app-task",
     "pluralName": "app-tasks",
-    "displayName": "App Task"
+    "displayName": "App Task",
+    "description": "Tasks users complete for points and ranks"
   },
   "options": {
     "draftAndPublish": true
   },
-  "pluginOptions": {},
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
   "attributes": {
     "title": {
       "type": "string",
-      "required": true
+      "required": true,
+      "pluginOptions": {
+        "i18n": { "localized": true }
+      }
     },
     "description": {
-      "type": "text"
+      "type": "text",
+      "pluginOptions": {
+        "i18n": { "localized": true }
+      }
     },
     "reward": {
-      "type": "string"
+      "type": "string",
+      "pluginOptions": {
+        "i18n": { "localized": true }
+      }
     },
     "hadith": {
-      "type": "text"
+      "type": "text",
+      "pluginOptions": {
+        "i18n": { "localized": true }
+      }
     },
     "source": {
-      "type": "string"
+      "type": "string",
+      "pluginOptions": {
+        "i18n": { "localized": true }
+      }
     },
     "icon": {
-      "type": "string"
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": false } }
     },
     "timeLabel": {
-      "type": "string"
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": true } }
     },
     "period": {
       "type": "enumeration",
       "default": "today",
-      "enum": [
-        "today",
-        "week",
-        "month",
-        "year"
-      ]
+      "enum": ["today", "week", "month", "year"],
+      "pluginOptions": { "i18n": { "localized": false } }
     },
     "order": {
-      "type": "integer"
+      "type": "integer",
+      "pluginOptions": { "i18n": { "localized": false } }
     },
     "isActive": {
       "type": "boolean",
-      "default": true
+      "default": true,
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "priority": {
+      "type": "enumeration",
+      "default": "med",
+      "enum": ["high", "med", "low"],
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "count": {
+      "type": "integer",
+      "default": 1,
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "dhikrText": {
+      "type": "text",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "actionLink": {
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "actionSurah": {
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "pointsValue": {
+      "type": "integer",
+      "default": 50,
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "taskCode": {
+      "type": "uid",
+      "targetField": "title",
+      "pluginOptions": { "i18n": { "localized": false } }
     },
     "category": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::app-category.app-category",
       "inversedBy": "app_tasks"
-    },
-    "priority": {
-      "type": "enumeration",
-      "default": "med",
-      "enum": [
-        "high",
-        "med",
-        "low"
-      ]
     }
   }
 }

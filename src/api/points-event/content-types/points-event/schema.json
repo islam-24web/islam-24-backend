@@ -1,0 +1,55 @@
+{
+  "kind": "collectionType",
+  "collectionName": "points_events",
+  "info": {
+    "singularName": "points-event",
+    "pluralName": "points-events",
+    "displayName": "Points Event",
+    "description": "Log of every point-earning activity"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "user_profile": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::user-profile.user-profile"
+    },
+    "points": {
+      "type": "integer",
+      "required": true
+    },
+    "eventType": {
+      "type": "enumeration",
+      "enum": [
+        "tasbih",
+        "deed_today",
+        "deed_week",
+        "deed_month",
+        "deed_year",
+        "heart_deed",
+        "divine_name",
+        "maqam",
+        "lecture",
+        "quran_page",
+        "surah_complete",
+        "streak_day",
+        "perfect_day",
+        "rank_bonus",
+        "manual"
+      ],
+      "required": true
+    },
+    "eventRef": {
+      "type": "string"
+    },
+    "occurredAt": {
+      "type": "datetime",
+      "required": true
+    },
+    "metadata": {
+      "type": "json"
+    }
+  }
+}

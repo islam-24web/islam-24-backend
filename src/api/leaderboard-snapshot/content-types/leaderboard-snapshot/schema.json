@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "leaderboard_snapshots",
+  "info": {
+    "singularName": "leaderboard-snapshot",
+    "pluralName": "leaderboard-snapshots",
+    "displayName": "Leaderboard Snapshot",
+    "description": "Weekly and monthly frozen snapshots of the leaderboard"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "scope": {
+      "type": "enumeration",
+      "enum": ["weekly", "monthly", "all_time"],
+      "required": true
+    },
+    "periodKey": {
+      "type": "string",
+      "required": true
+    },
+    "periodStart": {
+      "type": "datetime",
+      "required": true
+    },
+    "periodEnd": {
+      "type": "datetime"
+    },
+    "topUsers": {
+      "type": "json"
+    },
+    "totalParticipants": {
+      "type": "integer",
+      "default": 0
+    },
+    "country": {
+      "type": "string"
+    }
+  }
+}
