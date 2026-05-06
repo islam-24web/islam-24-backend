@@ -32,14 +32,18 @@
       "required": true,
       "customField": "plugin::ckeditor.CKEditor",
       "options": {
-        "licenseKey": "eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE4MDk2NDc5OTksImp0aSI6IjE5ZDhjNmM4LTJlMjctNDVkYS1iZDdlLWE4ODI5NGRmYjI0ZiIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiXSwiZmVhdHVyZXMiOlsiRFJVUCIsIkUyUCIsIkUyVyJdLCJyZW1vdmVGZWF0dXJlcyI6WyJQQiIsIlJGIiwiU0NIIiwiVENQIiwiVEwiLCJUQ1IiLCJJUiIsIlNVQSIsIkI2NEEiLCJMUCIsIkhFIiwiUkVEIiwiUEZPIiwiV0MiLCJGQSI6IkJIiwiRlBIIiwiTUeIl0sInZjIjoiMDg1ZWI0OCJ9.kjqlpMVMxXemNCG9vSYpG8vvhlqhXpagdfEQYJ5uHr5JAp3V67yfsyLfCZ0RlpEZLYkwQ7JEH3wkvrXgYz0kPA"
+        "preset": "rich",
+        "output": "HTML",
+        "licenseKey": "eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE4MDk2NDc5OTksImp0aSI6IjE5ZDhjNmM4LTJlMjctNDVkYS1iZDdlLWE4ODI5NGRmYjI0ZiIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiXSwiZmVhdHVyZXMiOlsiRFJVUCIsIkUyUCIsIkUyVyJdLCJyZW1vdmVGZWF0dXJlcyI6WyJQQiIsIlJGIiwiU0NIIiwiVENQIiwiVEwiLCJUQ1IiLCJJUiIsIlNVQSIsIkI2NEEiLCJMUCIsIkhFIiwiUkVEIiwiUEZPIiwiV0MiLCJGQSIiLCJCS00iLCJGUEgiLCJNUkUiXSwidmMiOiIwODUxZWI0OCJ9.kjqlpMVMxXemNCG9vSYpG8vvhlqhXpagdfEQYJ5uHr5JAp3V67yfsyLfCZ0RlpEZLYkwQ7JEH3wkvrXgYz0kPA"
       }
     },
     "featured_image": {
       "type": "media",
       "multiple": false,
       "required": true,
-      "allowedTypes": ["images"]
+      "allowedTypes": [
+        "images"
+      ]
     },
     "category": {
       "type": "relation",
@@ -56,7 +60,9 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["images"]
+      "allowedTypes": [
+        "images"
+      ]
     },
     "is_featured": {
       "type": "boolean",

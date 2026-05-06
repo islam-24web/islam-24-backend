@@ -24,6 +24,5 @@ export default ({ env }: any) => ({
   },
   ckeditor: {
     enabled: true,
-    resolve: './src/plugins/ckeditor',
   },
 });

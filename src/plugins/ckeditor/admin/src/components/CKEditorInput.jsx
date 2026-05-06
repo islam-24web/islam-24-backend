@@ -42,7 +42,6 @@ const CKEditorInput = ({ attribute, name, disabled, error, intlLabel, required, 
         <EditorWrapper>
           <CKEditor
             editor={ClassicEditor}
-            disabled={disabled}
             data={value ?? ''}
             onReady={handleReady}
             onChange={(event, editor) => {
