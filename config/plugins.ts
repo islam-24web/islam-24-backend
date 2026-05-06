@@ -22,4 +22,8 @@ export default ({ env }: any) => ({
       },
     },
   },
+  tiptap: true,
+  seo: {
+    enabled: true,
+  },
 });
