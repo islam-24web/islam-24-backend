@@ -1,0 +1,12 @@
+{
+  "name": "tiptap",
+  "version": "1.0.0",
+  "description": "TipTap Rich Text Editor custom field for Strapi 5",
+  "strapi": {
+    "name": "tiptap",
+    "displayName": "TipTap Editor",
+    "description": "أقوى محرر نصوص في العالم - TipTap ProseMirror",
+    "kind": "plugin"
+  },
+  "private": true
+}

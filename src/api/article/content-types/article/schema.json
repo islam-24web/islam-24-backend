@@ -28,8 +28,9 @@
       "required": true
     },
     "content": {
-      "type": "richtext",
-      "required": true
+      "type": "customField",
+      "required": true,
+      "customField": "plugin::tiptap.TipTap"
     },
     "featured_image": {
       "type": "media",
