@@ -30,7 +30,10 @@
     "content": {
       "type": "customField",
       "required": true,
-      "customField": "plugin::ckeditor5.CKEditor"
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
     },
     "featured_image": {
       "type": "media",
