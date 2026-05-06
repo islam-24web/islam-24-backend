@@ -1,0 +1,10 @@
+{
+  "name": "ckeditor-field",
+  "version": "1.0.0",
+  "private": true,
+  "strapi": {
+    "kind": "plugin",
+    "name": "ckeditor",
+    "displayName": "CKEditor 5 Field"
+  }
+}
