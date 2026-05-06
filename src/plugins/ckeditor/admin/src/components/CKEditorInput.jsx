@@ -10,27 +10,31 @@ const EditorWrapper = styled.div`
   .ck-editor__editable {
     min-height: 300px;
     max-height: 600px;
+  }
+  .ck-editor__editable[contenteditable="true"] {
     direction: rtl;
     text-align: right;
   }
+  /* Force remove read-only class if present */
+  .ck-editor__editable.ck-read-only {
+    pointer-events: auto !important;
+  }
 `;
 
-const CKEditorInput = ({ attribute, name, disabled, error, intlLabel, required, description, labelAction }) => {
+const CKEditorInput = ({ attribute, name, error, intlLabel, required, description, labelAction }) => {
   const { onChange, value } = useField(name);
   const { formatMessage } = useIntl();
-  const editorRef = useRef(null);
-  const [ready, setReady] = useState(false);
 
   const licenseKey = attribute?.options?.licenseKey || '';
 
   const editorConfig = {
     licenseKey,
-    language: 'ar',
+    language: { ui: 'en', content: 'ar' },
   };
 
   const handleReady = useCallback((editor) => {
-    editorRef.current = editor;
-    setReady(true);
+    // Ensure editor is always editable — never read-only
+    editor.disableReadOnlyMode('strapi');
   }, []);
 
   return (
@@ -42,7 +46,6 @@ const CKEditorInput = ({ attribute, name, disabled, error, intlLabel, required, 
         <EditorWrapper>
           <CKEditor
             editor={ClassicEditor}
-            disabled={false}
             data={value ?? ''}
             onReady={handleReady}
             onChange={(event, editor) => {
