@@ -22,5 +22,7 @@ export default ({ env }: any) => ({
       },
     },
   },
-  tiptap: true,
+  ckeditor: {
+    enabled: true,
+  },
 });
