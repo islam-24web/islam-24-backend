@@ -22,7 +22,7 @@ export default ({ env }: any) => ({
       },
     },
   },
-  ckeditor: {
+  ckeditor5: {
     enabled: true,
   },
 });
