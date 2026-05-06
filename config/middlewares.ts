@@ -7,7 +7,8 @@ export default [
       contentSecurityPolicy: {
         useDefaults: true,
         directives: {
-          "connect-src": ["'self'", "https:"],
+          "script-src": ["'self'", "'unsafe-inline'", "https://cdn.ckeditor.com"],
+          "connect-src": ["'self'", "https:", "https://proxy-event.ckeditor.com"],
           "img-src": [
             "'self'",
             "data:",

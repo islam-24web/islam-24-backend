@@ -30,7 +30,11 @@
     "content": {
       "type": "customField",
       "required": true,
-      "customField": "plugin::tiptap.TipTap"
+      "customField": "plugin::ckeditor.CKEditor",
+      "options": {
+        "preset": "rich",
+        "output": "HTML"
+      }
     },
     "featured_image": {
       "type": "media",
