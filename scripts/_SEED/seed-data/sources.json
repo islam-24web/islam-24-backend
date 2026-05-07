@@ -1,0 +1,37 @@
+[
+  {
+    "name": "RemoteOK",
+    "slug": "remoteok",
+    "baseUrl": "https://remoteok.com",
+    "attributionRequired": true,
+    "backlinkText": "View on RemoteOK"
+  },
+  {
+    "name": "Adzuna",
+    "slug": "adzuna",
+    "baseUrl": "https://www.adzuna.com",
+    "attributionRequired": true,
+    "backlinkText": "View on Adzuna"
+  },
+  {
+    "name": "Arbeitnow",
+    "slug": "arbeitnow",
+    "baseUrl": "https://www.arbeitnow.com",
+    "attributionRequired": true,
+    "backlinkText": "View on Arbeitnow"
+  },
+  {
+    "name": "Mercor",
+    "slug": "mercor",
+    "baseUrl": "https://work.mercor.com",
+    "attributionRequired": true,
+    "backlinkText": "Apply via Mercor"
+  },
+  {
+    "name": "Manual",
+    "slug": "manual",
+    "baseUrl": "https://islam-24.com/jobs",
+    "attributionRequired": false,
+    "backlinkText": ""
+  }
+]

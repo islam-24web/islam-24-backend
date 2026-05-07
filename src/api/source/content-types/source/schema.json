@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "sources",
+  "info": {
+    "singularName": "source",
+    "pluralName": "sources",
+    "displayName": "Source",
+    "description": "External sources we aggregate jobs from (e.g., RemoteOK, Adzuna)"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "baseUrl": {
+      "type": "string",
+      "required": true
+    },
+    "attributionRequired": {
+      "type": "boolean",
+      "default": true
+    },
+    "backlinkText": {
+      "type": "string"
+    },
+    "lastSyncedAt": {
+      "type": "datetime"
+    },
+    "jobs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::job.job",
+      "mappedBy": "source"
+    }
+  }
+}

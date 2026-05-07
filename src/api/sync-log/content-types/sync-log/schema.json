@@ -1,0 +1,54 @@
+{
+  "kind": "collectionType",
+  "collectionName": "sync_logs",
+  "info": {
+    "singularName": "sync-log",
+    "pluralName": "sync-logs",
+    "displayName": "Sync Log",
+    "description": "Audit trail of every external sync run"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "sourceName": {
+      "type": "string",
+      "required": true
+    },
+    "startedAt": {
+      "type": "datetime",
+      "required": true
+    },
+    "finishedAt": {
+      "type": "datetime"
+    },
+    "durationMs": {
+      "type": "integer"
+    },
+    "jobsFound": {
+      "type": "integer",
+      "default": 0
+    },
+    "jobsAdded": {
+      "type": "integer",
+      "default": 0
+    },
+    "jobsUpdated": {
+      "type": "integer",
+      "default": 0
+    },
+    "jobsRejected": {
+      "type": "integer",
+      "default": 0
+    },
+    "errors": {
+      "type": "json"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["running", "success", "partial", "failed"],
+      "default": "running"
+    }
+  }
+}

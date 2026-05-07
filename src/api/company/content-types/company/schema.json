@@ -1,0 +1,71 @@
+{
+  "kind": "collectionType",
+  "collectionName": "companies",
+  "info": {
+    "singularName": "company",
+    "pluralName": "companies",
+    "displayName": "Company",
+    "description": "Companies that post jobs (synced from external sources)"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"],
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "description": {
+      "type": "richtext",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "website": {
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "country": {
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "sizeRange": {
+      "type": "enumeration",
+      "enum": [
+        "SIZE_1_10",
+        "SIZE_11_50",
+        "SIZE_51_200",
+        "SIZE_201_500",
+        "SIZE_501_1000",
+        "SIZE_1001_5000",
+        "SIZE_5000_PLUS"
+      ],
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "industry": {
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "jobs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::job.job",
+      "mappedBy": "company"
+    }
+  }
+}

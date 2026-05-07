@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_shared_physical_locations",
+  "info": {
+    "displayName": "Physical Location",
+    "icon": "map",
+    "description": "Optional physical address for ONSITE/HYBRID jobs"
+  },
+  "options": {},
+  "attributes": {
+    "country": {
+      "type": "string",
+      "required": true
+    },
+    "region": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    }
+  }
+}

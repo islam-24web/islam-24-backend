@@ -1,0 +1,106 @@
+[
+  {
+    "en": {
+      "name": "AI / Machine Learning",
+      "slug": "ai-machine-learning",
+      "description": "Artificial intelligence, machine learning, deep learning, MLOps, and AI engineering roles."
+    },
+    "ar": {
+      "name": "ذكاء اصطناعي وتعلم آلي",
+      "slug": "ai-machine-learning-ar",
+      "description": "وظائف الذكاء الاصطناعي وتعلم الآلة والتعلم العميق وهندسة الذكاء الاصطناعي."
+    },
+    "icon": "cpu"
+  },
+  {
+    "en": {
+      "name": "Software Engineering",
+      "slug": "software-engineering",
+      "description": "Backend, frontend, full-stack, mobile, and platform engineering roles."
+    },
+    "ar": {
+      "name": "هندسة البرمجيات",
+      "slug": "software-engineering-ar",
+      "description": "وظائف هندسة الواجهات الخلفية والأمامية والمتكاملة وتطوير تطبيقات الجوال."
+    },
+    "icon": "code"
+  },
+  {
+    "en": {
+      "name": "Data & Analytics",
+      "slug": "data-analytics",
+      "description": "Data engineering, analytics, BI, and data science roles."
+    },
+    "ar": {
+      "name": "البيانات والتحليلات",
+      "slug": "data-analytics-ar",
+      "description": "وظائف هندسة البيانات والتحليلات وذكاء الأعمال وعلوم البيانات."
+    },
+    "icon": "bar-chart"
+  },
+  {
+    "en": {
+      "name": "Design & UX",
+      "slug": "design-ux",
+      "description": "Product design, UX, UI, and design systems roles."
+    },
+    "ar": {
+      "name": "تصميم وتجربة المستخدم",
+      "slug": "design-ux-ar",
+      "description": "وظائف تصميم المنتجات وتجربة المستخدم وواجهة المستخدم وأنظمة التصميم."
+    },
+    "icon": "palette"
+  },
+  {
+    "en": {
+      "name": "Marketing & SEO",
+      "slug": "marketing-seo",
+      "description": "Marketing, growth, content, and SEO roles."
+    },
+    "ar": {
+      "name": "تسويق و SEO",
+      "slug": "marketing-seo-ar",
+      "description": "وظائف التسويق والنمو والمحتوى وتحسين محركات البحث."
+    },
+    "icon": "trending-up"
+  },
+  {
+    "en": {
+      "name": "Sales & Business",
+      "slug": "sales-business",
+      "description": "Sales, business development, account management, and partnerships."
+    },
+    "ar": {
+      "name": "مبيعات وأعمال",
+      "slug": "sales-business-ar",
+      "description": "وظائف المبيعات وتطوير الأعمال وإدارة الحسابات والشراكات."
+    },
+    "icon": "briefcase"
+  },
+  {
+    "en": {
+      "name": "Medical Writing",
+      "slug": "medical-writing",
+      "description": "Medical writing, regulatory writing, and healthcare content roles."
+    },
+    "ar": {
+      "name": "كتابة طبية",
+      "slug": "medical-writing-ar",
+      "description": "وظائف الكتابة الطبية والكتابة التنظيمية ومحتوى الرعاية الصحية."
+    },
+    "icon": "stethoscope"
+  },
+  {
+    "en": {
+      "name": "Customer Support",
+      "slug": "customer-support",
+      "description": "Customer success, support, and operations roles."
+    },
+    "ar": {
+      "name": "دعم العملاء",
+      "slug": "customer-support-ar",
+      "description": "وظائف نجاح العملاء والدعم الفني والعمليات."
+    },
+    "icon": "headphones"
+  }
+]
