@@ -123,6 +123,20 @@ export interface SharedLink extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedPhysicalLocation extends Struct.ComponentSchema {
+  collectionName: 'components_shared_physical_locations';
+  info: {
+    description: 'Optional physical address for ONSITE/HYBRID jobs';
+    displayName: 'Physical Location';
+    icon: 'map';
+  };
+  attributes: {
+    city: Schema.Attribute.String;
+    country: Schema.Attribute.String & Schema.Attribute.Required;
+    region: Schema.Attribute.String;
+  };
+}
+
 export interface SharedSeo extends Struct.ComponentSchema {
   collectionName: 'components_shared_seos';
   info: {
@@ -158,6 +172,7 @@ declare module '@strapi/strapi' {
       'blocks.text-block': BlocksTextBlock;
       'navigation.social-link': NavigationSocialLink;
       'shared.link': SharedLink;
+      'shared.physical-location': SharedPhysicalLocation;
       'shared.seo': SharedSeo;
     }
   }
