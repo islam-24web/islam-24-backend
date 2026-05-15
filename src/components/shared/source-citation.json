@@ -1,0 +1,38 @@
+{
+  "collectionName": "components_shared_source_citations",
+  "info": {
+    "displayName": "Source",
+    "icon": "book",
+    "description": "A cited source. Pick a kind so readers and search engines understand the type of evidence (Quran, hadith, scholarly, medical, research, book, other)"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true,
+      "maxLength": 200
+    },
+    "url": {
+      "type": "string",
+      "maxLength": 500
+    },
+    "kind": {
+      "type": "enumeration",
+      "enum": [
+        "quran",
+        "hadith",
+        "scholarly",
+        "medical",
+        "research",
+        "book",
+        "other"
+      ],
+      "default": "other",
+      "required": true
+    },
+    "reference": {
+      "type": "string",
+      "maxLength": 300
+    }
+  }
+}

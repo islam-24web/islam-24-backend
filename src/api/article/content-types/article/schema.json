@@ -27,6 +27,10 @@
       "maxLength": 300,
       "required": true
     },
+    "quickAnswer": {
+      "type": "text",
+      "maxLength": 320
+    },
     "content": {
       "type": "customField",
       "required": true,
@@ -79,6 +83,19 @@
       "type": "component",
       "repeatable": false,
       "component": "shared.seo"
+    },
+    "lastReviewedAt": {
+      "type": "date"
+    },
+    "faqs": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.faq-item"
+    },
+    "sources": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.source-citation"
     }
   }
 }
