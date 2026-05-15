@@ -21,7 +21,7 @@ export default {
     },
     {
       method: "POST",
-      path: "/articles/asma-allah/unpublish-sources",
+      path: "/maintenance/asma-allah/unpublish-sources",
       handler: "article.unpublishAsmaAllahSources",
       config: {
         auth: {},
