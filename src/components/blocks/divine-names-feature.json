@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_blocks_divine_names_features",
+  "info": {
+    "displayName": "Divine Names Feature",
+    "icon": "star",
+    "description": "Promo for the Asma Allah surface. Either a card CTA to /asma-allah, or a horizontal strip of N name tiles."
+  },
+  "options": {},
+  "attributes": {
+    "mode": {
+      "type": "enumeration",
+      "enum": ["card-cta", "strip"],
+      "default": "card-cta"
+    },
+    "headline_ar": {
+      "type": "string"
+    },
+    "body_ar": {
+      "type": "text"
+    },
+    "cta_label": {
+      "type": "string"
+    },
+    "strip_count": {
+      "type": "integer",
+      "min": 3,
+      "max": 12,
+      "default": 9
+    }
+  }
+}

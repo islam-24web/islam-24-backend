@@ -17,7 +17,8 @@
       "components": [
         "blocks.daily-tiles",
         "blocks.category-strip",
-        "blocks.home-hero"
+        "blocks.home-hero",
+        "blocks.divine-names-feature"
       ]
     },
     "seo": {
