@@ -221,13 +221,18 @@ async function step4_pairings(resultBySlug) {
       return;
     }
     console.log(`   ${APPLY ? "link" : "[dry] link"}  ${field}: ${slugA} ↔ ${slugB}`);
+    const current = Array.isArray(a[field]) ? a[field] : [];
+    const currentIds = current.map((item) => item.documentId).filter(Boolean);
+    const nextIds = [...new Set([...currentIds, b.documentId])];
     if (APPLY) {
-      // Set inversedBy self-relation: writing on one side propagates.
+      // Strapi replaces relation state for this self-M2M shape, so preserve
+      // locally accumulated connections when linking multiple targets.
       await api("PUT", `/divine-names/${a.documentId}`, {
-        data: { [field]: { connect: [b.documentId] } },
+        data: { [field]: { connect: nextIds } },
       });
       if (DELAY_MS > 0) await sleep(DELAY_MS);
     }
+    a[field] = [...current, b];
     linked += 1;
   }
 
