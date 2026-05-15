@@ -4,12 +4,12 @@
  *
  * Idempotent. Dry-run by default. Run with --apply to mutate.
  *
- * Sequence (each step independent + re-runnable):
+ * Sequence (each phase independent + re-runnable):
  *   1. Fetch all articles in `names-of-allah` category.
  *   2. Parse number / arabic / transliteration from each article's slug+title.
- *   3. For each, upsert a divine-name row (preserving slug `name-NN-X`).
- *   4. Seed paired-name relations (mercy / opposite / quranic).
- *   5. Unpublish the source articles (reversible; do NOT delete).
+ *   3. `--phase=create`: upsert divine-name rows (preserving slug `name-NN-X`).
+ *   4. `--phase=pairs`: seed paired-name relations after all 99 rows exist.
+ *   5. `--phase=unpublish`: unpublish source articles after rows + pairs verify.
  *
  * Requires that the divine-name content type is live on the backend
  * (i.e., the C2 schema commit must have deployed via Railway).
@@ -24,10 +24,33 @@ const STRAPI_URL =
 const TOKEN = process.env.STRAPI_API_TOKEN || process.env.STRAPI_TOKEN;
 const APPLY = process.argv.includes("--apply");
 const SKIP_UNPUBLISH = process.argv.includes("--skip-unpublish");
+const PHASE = readPhase();
+const DELAY_MS = Number.parseInt(process.env.C2_DELAY_MS || "750", 10);
+const MAX_RETRIES = Number.parseInt(process.env.C2_MAX_RETRIES || "4", 10);
+const EXPECTED_COUNT = 99;
 
 if (!TOKEN) {
   console.error("ERROR: STRAPI_API_TOKEN must be set in env.");
   process.exit(1);
+}
+
+if (APPLY && PHASE === "all") {
+  console.error("ERROR: --apply requires --phase=create, --phase=pairs, or --phase=unpublish.");
+  process.exit(1);
+}
+
+function readPhase() {
+  if (process.argv.includes("--create-only")) return "create";
+  if (process.argv.includes("--pairs-only")) return "pairs";
+  if (process.argv.includes("--unpublish-only")) return "unpublish";
+  const arg = process.argv.find((a) => a.startsWith("--phase="));
+  const phase = arg ? arg.slice("--phase=".length) : "all";
+  const allowed = new Set(["all", "create", "pairs", "unpublish"]);
+  if (!allowed.has(phase)) {
+    console.error("ERROR: --phase must be one of: all, create, pairs, unpublish.");
+    process.exit(1);
+  }
+  return phase;
 }
 
 // ─── Hand-curated pair seeds (decision 7) ──────────────────────────────
@@ -51,21 +74,42 @@ const QURANIC_GROUPS = [
 
 // ─── HTTP helpers ──────────────────────────────────────────────────────
 
-async function api(method, path, body) {
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function api(method, path, body, options = {}) {
   const url = `${STRAPI_URL}/api${path}`;
-  const res = await fetch(url, {
-    method,
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${TOKEN}`,
-    },
-    body: body ? JSON.stringify(body) : undefined,
-  });
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`${method} ${path} → ${res.status} ${res.statusText} :: ${text.slice(0, 400)}`);
+  const retries = options.retries ?? (APPLY && method !== "GET" ? MAX_RETRIES : 0);
+  let attempt = 0;
+  while (true) {
+    try {
+      const res = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${TOKEN}`,
+        },
+        body: body ? JSON.stringify(body) : undefined,
+      });
+      if (res.ok) return res.status === 204 ? null : res.json();
+
+      const text = await res.text();
+      const retryable = [502, 503, 504].includes(res.status);
+      if (!retryable || attempt >= retries) {
+        throw new Error(`${method} ${path} → ${res.status} ${res.statusText} :: ${text.slice(0, 400)}`);
+      }
+      const wait = 1000 * 2 ** attempt;
+      console.log(`   retry ${attempt + 1}/${retries} after ${res.status} on ${method} ${path} (${wait}ms)`);
+      await sleep(wait);
+    } catch (err) {
+      if (attempt >= retries) throw err;
+      const wait = 1000 * 2 ** attempt;
+      console.log(`   retry ${attempt + 1}/${retries} after network error on ${method} ${path} (${wait}ms)`);
+      await sleep(wait);
+    }
+    attempt += 1;
   }
-  return res.status === 204 ? null : res.json();
 }
 
 async function fetchAll(path) {
@@ -124,18 +168,19 @@ async function step1_collectArticles() {
 
 async function step3_upsertEntities(items) {
   console.log("\n=== Step 3 — Upsert divine-name entities ===");
-  const existing = await fetchAll(
-    "/divine-names?fields[0]=number&fields[1]=slug",
-  );
+  const existing = await fetchExistingDivineNames();
   const bySlug = new Map(existing.map((e) => [e.slug, e]));
   console.log(`   ${existing.length} existing divine-name rows`);
 
   const resultBySlug = new Map();
+  let created = 0;
+  let skipped = 0;
   for (const it of items) {
     const already = bySlug.get(it.slug);
     if (already) {
       console.log(`   skip  exists  ${it.slug} (#${it.number})`);
       resultBySlug.set(it.slug, already);
+      skipped += 1;
       continue;
     }
     const payload = {
@@ -152,15 +197,21 @@ async function step3_upsertEntities(items) {
     if (APPLY) {
       const res = await api("POST", "/divine-names", payload);
       resultBySlug.set(it.slug, res.data);
+      created += 1;
+      if (DELAY_MS > 0) await sleep(DELAY_MS);
     } else {
       resultBySlug.set(it.slug, { documentId: `<dry-${it.slug}>`, number: it.number, slug: it.slug });
+      created += 1;
     }
   }
-  return resultBySlug;
+  console.log(`   summary: ${created} ${APPLY ? "created" : "would create"} · ${skipped} skipped`);
+  return { resultBySlug, created, skipped };
 }
 
 async function step4_pairings(resultBySlug) {
   console.log("\n=== Step 4 — Seed pair relations ===");
+  assertAllEntitiesPresent(resultBySlug);
+  let linked = 0;
 
   async function linkPair(field, slugA, slugB) {
     const a = resultBySlug.get(`name-${findNumber(slugA)}-${slugA}`);
@@ -175,7 +226,9 @@ async function step4_pairings(resultBySlug) {
       await api("PUT", `/divine-names/${a.documentId}`, {
         data: { [field]: { connect: [b.documentId] } },
       });
+      if (DELAY_MS > 0) await sleep(DELAY_MS);
     }
+    linked += 1;
   }
 
   function findNumber(slugSuffix) {
@@ -197,25 +250,98 @@ async function step4_pairings(resultBySlug) {
       }
     }
   }
+  console.log(`   summary: ${linked} ${APPLY ? "linked" : "would link"}`);
+  if (linked !== expectedPairCount()) {
+    throw new Error(`pair-link count mismatch: expected ${expectedPairCount()}, got ${linked}`);
+  }
+  return linked;
 }
 
-async function step5_unpublishArticles(items) {
+async function step5_unpublishArticles(items, resultBySlug) {
   console.log("\n=== Step 5 — Unpublish source articles ===");
   if (SKIP_UNPUBLISH) {
     console.log("   --skip-unpublish flag set; leaving articles published");
     return;
   }
+  assertAllEntitiesPresent(resultBySlug);
+  if (APPLY) await verifyExpectedPairLinks();
+  let unpublished = 0;
+  let skipped = 0;
   for (const it of items) {
     const a = it.source;
     if (!a.publishedAt) {
       console.log(`   skip  already unpublished  ${a.slug}`);
+      skipped += 1;
       continue;
     }
     console.log(`   ${APPLY ? "unpublish" : "[dry] unpublish"}  ${a.slug}`);
     if (APPLY) {
       await api("PUT", `/articles/${a.documentId}`, { data: { publishedAt: null } });
+      unpublished += 1;
+      if (DELAY_MS > 0) await sleep(DELAY_MS);
+    } else {
+      unpublished += 1;
     }
   }
+  console.log(`   summary: ${unpublished} ${APPLY ? "unpublished" : "would unpublish"} · ${skipped} skipped`);
+}
+
+async function fetchExistingDivineNames(populatePairs = false) {
+  const pairPopulate =
+    "&populate[mercyPair][fields][0]=slug&populate[oppositePair][fields][0]=slug&populate[quranicPair][fields][0]=slug";
+  return fetchAll(
+    `/divine-names?fields[0]=number&fields[1]=slug${populatePairs ? pairPopulate : ""}`,
+  );
+}
+
+function expectedPairCount() {
+  return MERCY_PAIRS.length + OPPOSITE_PAIRS.length + QURANIC_GROUPS.reduce(
+    (sum, group) => sum + (group.length * (group.length - 1)) / 2,
+    0,
+  );
+}
+
+function assertAllEntitiesPresent(resultBySlug) {
+  const slugs = [...resultBySlug.keys()];
+  if (slugs.length !== EXPECTED_COUNT) {
+    throw new Error(`divine-name row gate failed: expected ${EXPECTED_COUNT}, found ${slugs.length}`);
+  }
+}
+
+function hasRelation(entity, field, slug) {
+  const rel = entity[field];
+  const rows = Array.isArray(rel) ? rel : rel?.data || [];
+  return rows.some((r) => r.slug === slug || r.attributes?.slug === slug);
+}
+
+async function verifyExpectedPairLinks() {
+  const rows = await fetchExistingDivineNames(true);
+  const bySuffix = new Map(rows.map((row) => [row.slug.replace(/^name-\d{1,2}-/, ""), row]));
+  let present = 0;
+
+  function requirePair(field, a, b) {
+    const rowA = bySuffix.get(a);
+    const rowB = bySuffix.get(b);
+    if (!rowA || !rowB) throw new Error(`pair verification missing entity: ${a} or ${b}`);
+    if (!hasRelation(rowA, field, rowB.slug) && !hasRelation(rowB, field, rowA.slug)) {
+      throw new Error(`pair verification failed: ${field} ${a} ↔ ${b} missing`);
+    }
+    present += 1;
+  }
+
+  for (const [a, b] of MERCY_PAIRS) requirePair("mercyPair", a, b);
+  for (const [a, b] of OPPOSITE_PAIRS) requirePair("oppositePair", a, b);
+  for (const group of QURANIC_GROUPS) {
+    for (let i = 0; i < group.length; i += 1) {
+      for (let j = i + 1; j < group.length; j += 1) {
+        requirePair("quranicPair", group[i], group[j]);
+      }
+    }
+  }
+  if (present !== expectedPairCount()) {
+    throw new Error(`pair verification count mismatch: expected ${expectedPairCount()}, got ${present}`);
+  }
+  console.log(`   verified ${present} expected pair links`);
 }
 
 // ─── Run ───────────────────────────────────────────────────────────────
@@ -223,13 +349,37 @@ async function step5_unpublishArticles(items) {
 (async () => {
   console.log(`Phase C2 migration — target: ${STRAPI_URL}`);
   console.log(`Mode: ${APPLY ? "APPLY (mutating prod)" : "DRY RUN (no writes)"}`);
+  console.log(`Phase: ${PHASE}`);
+  if (APPLY) console.log(`Pacing: ${DELAY_MS}ms between writes · ${MAX_RETRIES} retries on 502/503/504`);
   if (SKIP_UNPUBLISH) console.log("(--skip-unpublish: source articles will stay published)");
 
   try {
     const items = await step1_collectArticles();
-    const resultBySlug = await step3_upsertEntities(items);
-    await step4_pairings(resultBySlug);
-    await step5_unpublishArticles(items);
+    let resultBySlug;
+
+    if (PHASE === "all" || PHASE === "create") {
+      ({ resultBySlug } = await step3_upsertEntities(items));
+      if (PHASE === "create") {
+        console.log("\nDone. Create phase complete.");
+        return;
+      }
+    } else {
+      const existing = await fetchExistingDivineNames();
+      resultBySlug = new Map(existing.map((e) => [e.slug, e]));
+      console.log(`\n=== Existing divine-name entities ===\n   ${existing.length} existing divine-name rows`);
+    }
+
+    if (PHASE === "all" || PHASE === "pairs") {
+      await step4_pairings(resultBySlug);
+      if (PHASE === "pairs") {
+        console.log("\nDone. Pair phase complete.");
+        return;
+      }
+    }
+
+    if (PHASE === "all" || PHASE === "unpublish") {
+      await step5_unpublishArticles(items, resultBySlug);
+    }
 
     console.log(`\nDone. ${APPLY ? "" : "Re-run with --apply to perform writes."}`);
   } catch (err) {
