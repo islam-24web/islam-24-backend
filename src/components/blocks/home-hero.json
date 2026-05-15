@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_blocks_home_heroes",
+  "info": {
+    "displayName": "Home Hero",
+    "icon": "picture",
+    "description": "Top-of-page hero. Carousel pulls latest featured articles (or a hand-picked list); single mode renders one large editorial card."
+  },
+  "options": {},
+  "attributes": {
+    "mode": {
+      "type": "enumeration",
+      "enum": ["latest-featured", "hand-picked"],
+      "default": "latest-featured"
+    },
+    "articles": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::article.article"
+    },
+    "variant": {
+      "type": "enumeration",
+      "enum": ["carousel", "single"],
+      "default": "carousel"
+    },
+    "limit": {
+      "type": "integer",
+      "min": 1,
+      "max": 8,
+      "default": 5
+    },
+    "eyebrow": {
+      "type": "string"
+    }
+  }
+}

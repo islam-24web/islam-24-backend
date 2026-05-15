@@ -16,7 +16,8 @@
       "type": "dynamiczone",
       "components": [
         "blocks.daily-tiles",
-        "blocks.category-strip"
+        "blocks.category-strip",
+        "blocks.home-hero"
       ]
     },
     "seo": {
