@@ -289,6 +289,7 @@ async function step5_unpublishArticles(items, resultBySlug) {
     }
   }
   console.log(`   summary: ${unpublished} ${APPLY ? "unpublished" : "would unpublish"} · ${skipped} skipped`);
+  if (APPLY) await verifySourceArticlesUnpublished();
 }
 
 async function fetchExistingDivineNames(populatePairs = false) {
@@ -347,6 +348,22 @@ async function verifyExpectedPairLinks() {
     throw new Error(`pair verification count mismatch: expected ${expectedPairCount()}, got ${present}`);
   }
   console.log(`   verified ${present} expected pair links`);
+}
+
+async function verifySourceArticlesUnpublished() {
+  const rows = await fetchAll(
+    "/articles?status=published&filters[category][slug][$eq]=names-of-allah&fields[0]=slug&fields[1]=publishedAt",
+  );
+  const liveNames = rows.filter((row) => /^name-\d{1,2}-/.test(row.slug || ""));
+  if (liveNames.length > 0) {
+    throw new Error(
+      `unpublish verification failed: ${liveNames.length} source articles still published (${liveNames
+        .slice(0, 5)
+        .map((row) => row.slug)
+        .join(", ")})`,
+    );
+  }
+  console.log("   verified source articles are no longer published");
 }
 
 // ─── Run ───────────────────────────────────────────────────────────────

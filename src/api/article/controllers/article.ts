@@ -4,6 +4,9 @@
 
 import { factories } from "@strapi/strapi";
 
+const ASMA_SOURCE_CONFIRMATION = "unpublish-asma-allah-source-articles";
+const ASMA_SOURCE_PATTERN = /^name-\d{1,2}-/;
+
 export default factories.createCoreController(
   "api::article.article",
   ({ strapi }) => ({
@@ -82,6 +85,76 @@ export default factories.createCoreController(
 
       const sanitizedEntity = await this.sanitizeOutput(entity, ctx);
       return this.transformResponse(sanitizedEntity);
+    },
+
+    async unpublishAsmaAllahSources(ctx) {
+      if (ctx.request.body?.confirm !== ASMA_SOURCE_CONFIRMATION) {
+        return ctx.badRequest("Missing confirmation token");
+      }
+
+      const publishedArticles = await strapi.documents("api::article.article").findMany({
+        status: "published",
+        filters: {
+          category: {
+            slug: {
+              $eq: "names-of-allah",
+            },
+          },
+        },
+        fields: ["documentId", "slug", "publishedAt"],
+        pagination: {
+          pageSize: 150,
+        },
+      });
+
+      const sourceArticles = publishedArticles
+        .filter((article) => ASMA_SOURCE_PATTERN.test(article.slug || ""))
+        .sort((a, b) => a.slug.localeCompare(b.slug));
+
+      if (![0, 99].includes(sourceArticles.length)) {
+        return ctx.badRequest("Unexpected source article count", {
+          count: sourceArticles.length,
+          slugs: sourceArticles.map((article) => article.slug),
+        });
+      }
+
+      let unpublished = 0;
+      const slugs: string[] = [];
+      for (const article of sourceArticles) {
+        await strapi.documents("api::article.article").unpublish({
+          documentId: article.documentId,
+        });
+        unpublished += 1;
+        slugs.push(article.slug);
+      }
+
+      const remaining = await strapi.documents("api::article.article").findMany({
+        status: "published",
+        filters: {
+          category: {
+            slug: {
+              $eq: "names-of-allah",
+            },
+          },
+        },
+        fields: ["documentId", "slug", "publishedAt"],
+        pagination: {
+          pageSize: 150,
+        },
+      });
+
+      const remainingSources = remaining.filter((article) =>
+        ASMA_SOURCE_PATTERN.test(article.slug || "")
+      );
+
+      return {
+        data: {
+          matched: sourceArticles.length,
+          unpublished,
+          remainingPublished: remainingSources.length,
+          slugs,
+        },
+      };
     },
   })
 );

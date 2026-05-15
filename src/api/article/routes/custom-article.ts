@@ -19,5 +19,15 @@ export default {
         middlewares: [],
       },
     },
+    {
+      method: "POST",
+      path: "/articles/asma-allah/unpublish-sources",
+      handler: "article.unpublishAsmaAllahSources",
+      config: {
+        auth: {},
+        policies: [],
+        middlewares: [],
+      },
+    },
   ],
 };
