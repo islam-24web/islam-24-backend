@@ -34,6 +34,21 @@
       "component": "shared.link",
       "repeatable": true,
       "required": true
+    },
+    "nav_items": {
+      "type": "component",
+      "component": "shared.nav-item",
+      "repeatable": true
+    },
+    "show_date_strip": {
+      "type": "boolean",
+      "default": true
+    },
+    "tagline_ar": {
+      "type": "string"
+    },
+    "tagline_en": {
+      "type": "string"
     }
   }
 }

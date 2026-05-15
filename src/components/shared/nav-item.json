@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_shared_nav_items",
+  "info": {
+    "displayName": "Nav Item",
+    "icon": "link",
+    "description": "Navigation item with optional one-level dropdown"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "href": {
+      "type": "string"
+    },
+    "is_external": {
+      "type": "boolean",
+      "default": false
+    },
+    "highlight": {
+      "type": "boolean",
+      "default": false
+    },
+    "sub_items": {
+      "type": "component",
+      "component": "shared.link",
+      "repeatable": true
+    }
+  }
+}
