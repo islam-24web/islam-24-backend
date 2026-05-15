@@ -1060,9 +1060,11 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 300;
       }>;
+    faqs: Schema.Attribute.Component<'shared.faq-item', true>;
     featured_image: Schema.Attribute.Media<'images'> &
       Schema.Attribute.Required;
     is_featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    lastReviewedAt: Schema.Attribute.Date;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1071,6 +1073,10 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     published_date: Schema.Attribute.Date & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
+    quickAnswer: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 320;
+      }>;
     reading_time: Schema.Attribute.Integer &
       Schema.Attribute.SetMinMax<
         {
@@ -1081,6 +1087,7 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
       Schema.Attribute.DefaultTo<5>;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    sources: Schema.Attribute.Component<'shared.source-citation', true>;
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
@@ -1221,6 +1228,89 @@ export interface ApiCompanyCompany extends Struct.CollectionTypeSchema {
           localized: false;
         };
       }>;
+  };
+}
+
+export interface ApiDivineNameDivineName extends Struct.CollectionTypeSchema {
+  collectionName: 'divine_names';
+  info: {
+    description: 'أسماء الله الحسنى — entity collection. Each row is one of the 99 names with its Arabic form, transliteration, root, paired-name relations, and long-form content.';
+    displayName: 'Divine Name';
+    pluralName: 'divine-names';
+    singularName: 'divine-name';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    arabic: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 80;
+      }>;
+    audio: Schema.Attribute.Media<'audios'>;
+    body: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    faqs: Schema.Attribute.Component<'shared.faq-item', true>;
+    featuredImage: Schema.Attribute.Media<'images'>;
+    lastReviewedAt: Schema.Attribute.Date;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::divine-name.divine-name'
+    > &
+      Schema.Attribute.Private;
+    mercyPair: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::divine-name.divine-name'
+    >;
+    number: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 99;
+          min: 1;
+        },
+        number
+      >;
+    oppositePair: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::divine-name.divine-name'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    quranicPair: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::divine-name.divine-name'
+    >;
+    quranOccurrences: Schema.Attribute.JSON;
+    quickAnswer: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 320;
+      }>;
+    rootLetters: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 20;
+      }>;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
+    slug: Schema.Attribute.UID<'transliteration'> & Schema.Attribute.Required;
+    sources: Schema.Attribute.Component<'shared.source-citation', true>;
+    transliteration: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 80;
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -2510,6 +2600,7 @@ declare module '@strapi/strapi' {
       'api::article.article': ApiArticleArticle;
       'api::category.category': ApiCategoryCategory;
       'api::company.company': ApiCompanyCompany;
+      'api::divine-name.divine-name': ApiDivineNameDivineName;
       'api::footer.footer': ApiFooterFooter;
       'api::job-category.job-category': ApiJobCategoryJobCategory;
       'api::job.job': ApiJobJob;

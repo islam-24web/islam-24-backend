@@ -123,6 +123,30 @@ export interface SharedLink extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedFaqItem extends Struct.ComponentSchema {
+  collectionName: 'components_shared_faq_items';
+  info: {
+    description: 'A single question and answer pair shown to readers and emitted as FAQPage structured data';
+    displayName: 'FAQ Item';
+    icon: 'question';
+  };
+  attributes: {
+    answer: Schema.Attribute.RichText &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
+    question: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 200;
+      }>;
+  };
+}
+
 export interface SharedPhysicalLocation extends Struct.ComponentSchema {
   collectionName: 'components_shared_physical_locations';
   info: {
@@ -134,6 +158,35 @@ export interface SharedPhysicalLocation extends Struct.ComponentSchema {
     city: Schema.Attribute.String;
     country: Schema.Attribute.String & Schema.Attribute.Required;
     region: Schema.Attribute.String;
+  };
+}
+
+export interface SharedSourceCitation extends Struct.ComponentSchema {
+  collectionName: 'components_shared_source_citations';
+  info: {
+    description: 'A cited source. Pick a kind so readers and search engines understand the type of evidence (Quran, hadith, scholarly, medical, research, book, other)';
+    displayName: 'Source';
+    icon: 'book';
+  };
+  attributes: {
+    kind: Schema.Attribute.Enumeration<
+      ['quran', 'hadith', 'scholarly', 'medical', 'research', 'book', 'other']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'other'>;
+    label: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 200;
+      }>;
+    reference: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 300;
+      }>;
+    url: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 500;
+      }>;
   };
 }
 
@@ -171,8 +224,10 @@ declare module '@strapi/strapi' {
       'blocks.services-block': BlocksServicesBlock;
       'blocks.text-block': BlocksTextBlock;
       'navigation.social-link': NavigationSocialLink;
+      'shared.faq-item': SharedFaqItem;
       'shared.link': SharedLink;
       'shared.physical-location': SharedPhysicalLocation;
+      'shared.source-citation': SharedSourceCitation;
       'shared.seo': SharedSeo;
     }
   }
