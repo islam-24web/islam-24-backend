@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_blocks_editor_picks",
+  "info": {
+    "displayName": "Editor Pick",
+    "icon": "bookmark",
+    "description": "Curated bundle of hand-picked articles (featured series, themed selections)."
+  },
+  "options": {},
+  "attributes": {
+    "headline_ar": {
+      "type": "string"
+    },
+    "headline_en": {
+      "type": "string"
+    },
+    "subhead": {
+      "type": "text"
+    },
+    "articles": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::article.article"
+    },
+    "layout": {
+      "type": "enumeration",
+      "enum": ["two-up", "three-up", "magazine"],
+      "default": "three-up"
+    }
+  }
+}

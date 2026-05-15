@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_blocks_youtube_embeds",
+  "info": {
+    "displayName": "YouTube Embed",
+    "icon": "play",
+    "description": "Embedded YouTube video with a click-to-load facade (zero JS until interaction)."
+  },
+  "options": {},
+  "attributes": {
+    "url": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string"
+    },
+    "caption": {
+      "type": "text"
+    },
+    "aspect_ratio": {
+      "type": "enumeration",
+      "enum": ["16:9", "9:16", "1:1", "4:3"],
+      "default": "16:9"
+    }
+  }
+}

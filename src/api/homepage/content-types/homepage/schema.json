@@ -20,7 +20,10 @@
         "blocks.home-hero",
         "blocks.divine-names-feature",
         "blocks.apps-feature",
-        "blocks.newsletter-cta"
+        "blocks.newsletter-cta",
+        "blocks.editor-pick",
+        "blocks.youtube-embed",
+        "blocks.audio-embed"
       ]
     },
     "seo": {

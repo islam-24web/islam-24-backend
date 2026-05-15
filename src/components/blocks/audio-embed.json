@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_blocks_audio_embeds",
+  "info": {
+    "displayName": "Audio Embed",
+    "icon": "headphones",
+    "description": "Audio player (uploaded media or external URL). Native HTML5 audio — zero JS."
+  },
+  "options": {},
+  "attributes": {
+    "file": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["audios", "files"]
+    },
+    "url": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "caption": {
+      "type": "text"
+    },
+    "transcript_url": {
+      "type": "string"
+    }
+  }
+}
