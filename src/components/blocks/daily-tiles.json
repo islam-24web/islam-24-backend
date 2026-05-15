@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_blocks_daily_tiles",
+  "info": {
+    "displayName": "Daily Tiles",
+    "icon": "th-large",
+    "description": "Row of small daily-content tiles (ayah, hadith, wisdom, dua, etc.)"
+  },
+  "options": {},
+  "attributes": {
+    "headline_ar": {
+      "type": "string"
+    },
+    "headline_en": {
+      "type": "string"
+    },
+    "items": {
+      "type": "component",
+      "component": "shared.daily-tile",
+      "repeatable": true,
+      "max": 8
+    }
+  }
+}

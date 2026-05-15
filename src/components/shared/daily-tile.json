@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_shared_daily_tiles",
+  "info": {
+    "displayName": "Daily Tile",
+    "icon": "calendar",
+    "description": "A single tile in the daily-content row (ayah / hadith / wisdom / dua)"
+  },
+  "options": {},
+  "attributes": {
+    "icon": {
+      "type": "string"
+    },
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "text": {
+      "type": "text",
+      "required": true
+    },
+    "reference": {
+      "type": "string"
+    },
+    "tone": {
+      "type": "enumeration",
+      "enum": ["emerald", "amber"],
+      "default": "emerald"
+    },
+    "href": {
+      "type": "string"
+    }
+  }
+}
