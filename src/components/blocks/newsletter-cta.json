@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_blocks_newsletter_ctas",
+  "info": {
+    "displayName": "Newsletter CTA",
+    "icon": "envelop",
+    "description": "Email signup block. Submissions are stored in api::newsletter-subscriber.newsletter-subscriber via /api/newsletter."
+  },
+  "options": {},
+  "attributes": {
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "headline_ar": {
+      "type": "string"
+    },
+    "body_ar": {
+      "type": "text"
+    },
+    "placeholder": {
+      "type": "string"
+    },
+    "cta_label": {
+      "type": "string"
+    },
+    "success_message": {
+      "type": "string"
+    },
+    "consent_label": {
+      "type": "string"
+    }
+  }
+}

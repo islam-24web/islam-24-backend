@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "newsletter_subscribers",
+  "info": {
+    "singularName": "newsletter-subscriber",
+    "pluralName": "newsletter-subscribers",
+    "displayName": "Newsletter Subscriber",
+    "description": "Emails collected from the homepage newsletter-cta block. Public role must have CREATE permission only — no read/update/delete."
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "email": {
+      "type": "email",
+      "required": true,
+      "unique": true
+    },
+    "locale": {
+      "type": "enumeration",
+      "enum": ["ar", "en"],
+      "default": "ar"
+    },
+    "source": {
+      "type": "string"
+    },
+    "consent": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "subscribed_at": {
+      "type": "datetime"
+    }
+  }
+}

@@ -19,7 +19,8 @@
         "blocks.category-strip",
         "blocks.home-hero",
         "blocks.divine-names-feature",
-        "blocks.apps-feature"
+        "blocks.apps-feature",
+        "blocks.newsletter-cta"
       ]
     },
     "seo": {
