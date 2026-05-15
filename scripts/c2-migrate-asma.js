@@ -369,7 +369,7 @@ async function verifyExpectedPairLinks() {
         return;
       }
     } else {
-      const existing = await fetchExistingDivineNames();
+      const existing = await fetchExistingDivineNames(PHASE === "pairs" || PHASE === "unpublish");
       resultBySlug = new Map(existing.map((e) => [e.slug, e]));
       console.log(`\n=== Existing divine-name entities ===\n   ${existing.length} existing divine-name rows`);
     }
