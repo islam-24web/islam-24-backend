@@ -1,0 +1,37 @@
+{
+  "collectionName": "components_shared_app_cards",
+  "info": {
+    "displayName": "App Card",
+    "icon": "rocket",
+    "description": "Featured-app tile (Sibaq, etc.)"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "href": {
+      "type": "string",
+      "required": true
+    },
+    "open_in_new_tab": {
+      "type": "boolean",
+      "default": true
+    },
+    "tone": {
+      "type": "enumeration",
+      "enum": ["emerald", "amber", "neutral"],
+      "default": "emerald"
+    },
+    "cta_label": {
+      "type": "string"
+    }
+  }
+}

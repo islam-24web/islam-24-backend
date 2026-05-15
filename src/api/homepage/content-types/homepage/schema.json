@@ -18,7 +18,8 @@
         "blocks.daily-tiles",
         "blocks.category-strip",
         "blocks.home-hero",
-        "blocks.divine-names-feature"
+        "blocks.divine-names-feature",
+        "blocks.apps-feature"
       ]
     },
     "seo": {

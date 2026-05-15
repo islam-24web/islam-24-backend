@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_blocks_apps_features",
+  "info": {
+    "displayName": "Apps Feature",
+    "icon": "th",
+    "description": "Grid of featured Islamic apps (Sibaq, future apps)."
+  },
+  "options": {},
+  "attributes": {
+    "headline_ar": {
+      "type": "string"
+    },
+    "headline_en": {
+      "type": "string"
+    },
+    "items": {
+      "type": "component",
+      "component": "shared.app-card",
+      "repeatable": true,
+      "max": 6
+    }
+  }
+}
