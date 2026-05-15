@@ -1234,7 +1234,7 @@ export interface ApiCompanyCompany extends Struct.CollectionTypeSchema {
 export interface ApiDivineNameDivineName extends Struct.CollectionTypeSchema {
   collectionName: 'divine_names';
   info: {
-    description: 'أسماء الله الحسنى — entity collection. Each row is one of the 99 names with its Arabic form, transliteration, root, paired-name relations, and long-form content.';
+    description: '\u0623\u0633\u0645\u0627\u0621 \u0627\u0644\u0644\u0647 \u0627\u0644\u062D\u0633\u0646\u0649 \u2014 entity collection. Each row is one of the 99 names with its Arabic form, transliteration, root, paired-name relations, and long-form content.';
     displayName: 'Divine Name';
     pluralName: 'divine-names';
     singularName: 'divine-name';
@@ -1287,15 +1287,15 @@ export interface ApiDivineNameDivineName extends Struct.CollectionTypeSchema {
       'api::divine-name.divine-name'
     >;
     publishedAt: Schema.Attribute.DateTime;
+    quickAnswer: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 320;
+      }>;
     quranicPair: Schema.Attribute.Relation<
       'manyToMany',
       'api::divine-name.divine-name'
     >;
     quranOccurrences: Schema.Attribute.JSON;
-    quickAnswer: Schema.Attribute.Text &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 320;
-      }>;
     rootLetters: Schema.Attribute.String &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 20;
@@ -1339,6 +1339,48 @@ export interface ApiFooterFooter extends Struct.SingleTypeSchema {
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     social_links: Schema.Attribute.Component<'navigation.social-link', true>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
+  collectionName: 'homepages';
+  info: {
+    description: 'CMS-driven homepage composition. Edit the Sections dynamic zone to add/remove/reorder blocks.';
+    displayName: 'Homepage';
+    pluralName: 'homepages';
+    singularName: 'homepage';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::homepage.homepage'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    sections: Schema.Attribute.DynamicZone<
+      [
+        'blocks.daily-tiles',
+        'blocks.category-strip',
+        'blocks.home-hero',
+        'blocks.divine-names-feature',
+        'blocks.apps-feature',
+        'blocks.newsletter-cta',
+        'blocks.editor-pick',
+        'blocks.youtube-embed',
+        'blocks.audio-embed',
+      ]
+    >;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1732,7 +1774,49 @@ export interface ApiNavigationNavigation extends Struct.SingleTypeSchema {
       Schema.Attribute.Private;
     logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     logo_text: Schema.Attribute.String & Schema.Attribute.Required;
+    nav_items: Schema.Attribute.Component<'shared.nav-item', true>;
     publishedAt: Schema.Attribute.DateTime;
+    show_date_strip: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<true>;
+    tagline_ar: Schema.Attribute.String;
+    tagline_en: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiNewsletterSubscriberNewsletterSubscriber
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'newsletter_subscribers';
+  info: {
+    description: 'Emails collected from the homepage newsletter-cta block. Public role must have CREATE permission only \u2014 no read/update/delete.';
+    displayName: 'Newsletter Subscriber';
+    pluralName: 'newsletter-subscribers';
+    singularName: 'newsletter-subscriber';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    consent: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.Email &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::newsletter-subscriber.newsletter-subscriber'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    source: Schema.Attribute.String;
+    subscribed_at: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -2602,10 +2686,12 @@ declare module '@strapi/strapi' {
       'api::company.company': ApiCompanyCompany;
       'api::divine-name.divine-name': ApiDivineNameDivineName;
       'api::footer.footer': ApiFooterFooter;
+      'api::homepage.homepage': ApiHomepageHomepage;
       'api::job-category.job-category': ApiJobCategoryJobCategory;
       'api::job.job': ApiJobJob;
       'api::leaderboard-snapshot.leaderboard-snapshot': ApiLeaderboardSnapshotLeaderboardSnapshot;
       'api::navigation.navigation': ApiNavigationNavigation;
+      'api::newsletter-subscriber.newsletter-subscriber': ApiNewsletterSubscriberNewsletterSubscriber;
       'api::page.page': ApiPagePage;
       'api::points-event.points-event': ApiPointsEventPointsEvent;
       'api::rank.rank': ApiRankRank;
