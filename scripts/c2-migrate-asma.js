@@ -106,7 +106,7 @@ function parseArticle(article) {
 async function step1_collectArticles() {
   console.log("\n=== Step 1 — Collect Asma Allah articles ===");
   const arts = await fetchAll(
-    "/articles?filters[category][slug][$eq]=names-of-allah&fields[0]=title&fields[1]=slug&fields[2]=content&fields[3]=excerpt&fields[4]=publishedAt&pagination[pageSize]=100",
+    "/articles?filters[category][slug][$eq]=names-of-allah&fields[0]=title&fields[1]=slug&fields[2]=content&fields[3]=excerpt&fields[4]=publishedAt",
   );
   console.log(`   ${arts.length} articles found in names-of-allah`);
   const parsed = [];
@@ -125,7 +125,7 @@ async function step1_collectArticles() {
 async function step3_upsertEntities(items) {
   console.log("\n=== Step 3 — Upsert divine-name entities ===");
   const existing = await fetchAll(
-    "/divine-names?fields[0]=number&fields[1]=slug&pagination[pageSize]=100",
+    "/divine-names?fields[0]=number&fields[1]=slug",
   );
   const bySlug = new Map(existing.map((e) => [e.slug, e]));
   console.log(`   ${existing.length} existing divine-name rows`);
