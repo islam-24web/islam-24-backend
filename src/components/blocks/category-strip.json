@@ -1,0 +1,36 @@
+{
+  "collectionName": "components_blocks_category_strips",
+  "info": {
+    "displayName": "Category Strip",
+    "icon": "stack",
+    "description": "A featured-hero + small-thumb grid for one category. Editor picks the category; latest articles render automatically."
+  },
+  "options": {},
+  "attributes": {
+    "category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::category.category"
+    },
+    "headline_ar": {
+      "type": "string"
+    },
+    "headline_en": {
+      "type": "string"
+    },
+    "layout": {
+      "type": "enumeration",
+      "enum": ["hero-grid", "horizontal-scroll", "three-up"],
+      "default": "hero-grid"
+    },
+    "limit": {
+      "type": "integer",
+      "min": 3,
+      "max": 12,
+      "default": 7
+    },
+    "see_more_label": {
+      "type": "string"
+    }
+  }
+}

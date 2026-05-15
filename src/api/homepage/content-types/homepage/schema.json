@@ -15,7 +15,8 @@
     "sections": {
       "type": "dynamiczone",
       "components": [
-        "blocks.daily-tiles"
+        "blocks.daily-tiles",
+        "blocks.category-strip"
       ]
     },
     "seo": {
