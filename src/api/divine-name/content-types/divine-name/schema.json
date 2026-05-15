@@ -1,0 +1,102 @@
+{
+  "kind": "collectionType",
+  "collectionName": "divine_names",
+  "info": {
+    "singularName": "divine-name",
+    "pluralName": "divine-names",
+    "displayName": "Divine Name",
+    "description": "أسماء الله الحسنى — entity collection. Each row is one of the 99 names with its Arabic form, transliteration, root, paired-name relations, and long-form content."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "number": {
+      "type": "integer",
+      "required": true,
+      "unique": true,
+      "min": 1,
+      "max": 99
+    },
+    "arabic": {
+      "type": "string",
+      "required": true,
+      "maxLength": 80
+    },
+    "transliteration": {
+      "type": "string",
+      "required": true,
+      "maxLength": 80
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "transliteration",
+      "required": true
+    },
+    "rootLetters": {
+      "type": "string",
+      "maxLength": 20
+    },
+    "quickAnswer": {
+      "type": "text",
+      "maxLength": 320
+    },
+    "body": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
+    },
+    "quranOccurrences": {
+      "type": "json"
+    },
+    "mercyPair": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::divine-name.divine-name",
+      "inversedBy": "mercyPair"
+    },
+    "oppositePair": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::divine-name.divine-name",
+      "inversedBy": "oppositePair"
+    },
+    "quranicPair": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::divine-name.divine-name",
+      "inversedBy": "quranicPair"
+    },
+    "featuredImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "audio": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["audios"]
+    },
+    "lastReviewedAt": {
+      "type": "date"
+    },
+    "faqs": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.faq-item"
+    },
+    "sources": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.source-citation"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    }
+  }
+}
