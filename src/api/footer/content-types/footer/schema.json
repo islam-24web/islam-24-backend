@@ -22,6 +22,11 @@
       "component": "shared.link",
       "repeatable": true
     },
+    "sections": {
+      "type": "component",
+      "component": "shared.link-group",
+      "repeatable": true
+    },
     "social_links": {
       "type": "component",
       "component": "navigation.social-link",

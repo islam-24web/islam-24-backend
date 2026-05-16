@@ -371,6 +371,19 @@ export interface SharedLink extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedLinkGroup extends Struct.ComponentSchema {
+  collectionName: 'components_shared_link_groups';
+  info: {
+    description: 'A titled group of links (used for footer columns and similar grouped lists).';
+    displayName: 'Link Group';
+    icon: 'bulletList';
+  };
+  attributes: {
+    links: Schema.Attribute.Component<'shared.link', true>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedNavItem extends Struct.ComponentSchema {
   collectionName: 'components_shared_nav_items';
   info: {
@@ -477,6 +490,7 @@ declare module '@strapi/strapi' {
       'shared.daily-tile': SharedDailyTile;
       'shared.faq-item': SharedFaqItem;
       'shared.link': SharedLink;
+      'shared.link-group': SharedLinkGroup;
       'shared.nav-item': SharedNavItem;
       'shared.physical-location': SharedPhysicalLocation;
       'shared.seo': SharedSeo;
