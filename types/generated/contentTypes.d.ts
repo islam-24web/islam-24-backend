@@ -1117,6 +1117,8 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
+    approved_for_homepage: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
     articles: Schema.Attribute.Relation<'oneToMany', 'api::article.article'>;
     children: Schema.Attribute.Relation<'oneToMany', 'api::category.category'>;
     createdAt: Schema.Attribute.DateTime;
@@ -1126,6 +1128,20 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 500;
       }>;
+    homepage_layout: Schema.Attribute.Enumeration<
+      ['hero-grid', 'horizontal-scroll', 'three-up']
+    > &
+      Schema.Attribute.DefaultTo<'hero-grid'>;
+    homepage_limit: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 12;
+          min: 3;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<7>;
+    homepage_order: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1454,6 +1470,56 @@ export interface ApiJobCategoryJobCategory extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::job-category.job-category'
     >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiJobSubscriberJobSubscriber
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'job_subscribers';
+  info: {
+    description: 'Email subscribers for the daily job digest. Token-gated confirmation + unsubscribe.';
+    displayName: 'Job Subscriber';
+    pluralName: 'job-subscribers';
+    singularName: 'job-subscriber';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    confirmationToken: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Private &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 128;
+        minLength: 32;
+      }>;
+    confirmedAt: Schema.Attribute.DateTime;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.Email &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    lastDigestSentAt: Schema.Attribute.DateTime;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::job-subscriber.job-subscriber'
+    > &
+      Schema.Attribute.Private;
+    preferredLocale: Schema.Attribute.Enumeration<['en', 'ar']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'en'>;
+    publishedAt: Schema.Attribute.DateTime;
+    subscribedCategories: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::job-category.job-category'
+    >;
+    unsubscribedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -2695,6 +2761,7 @@ declare module '@strapi/strapi' {
       'api::footer.footer': ApiFooterFooter;
       'api::homepage.homepage': ApiHomepageHomepage;
       'api::job-category.job-category': ApiJobCategoryJobCategory;
+      'api::job-subscriber.job-subscriber': ApiJobSubscriberJobSubscriber;
       'api::job.job': ApiJobJob;
       'api::leaderboard-snapshot.leaderboard-snapshot': ApiLeaderboardSnapshotLeaderboardSnapshot;
       'api::navigation.navigation': ApiNavigationNavigation;

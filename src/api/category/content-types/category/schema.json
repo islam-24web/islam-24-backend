@@ -48,6 +48,25 @@
       "type": "component",
       "repeatable": false,
       "component": "shared.seo"
+    },
+    "approved_for_homepage": {
+      "type": "boolean",
+      "default": false
+    },
+    "homepage_layout": {
+      "type": "enumeration",
+      "enum": ["hero-grid", "horizontal-scroll", "three-up"],
+      "default": "hero-grid"
+    },
+    "homepage_limit": {
+      "type": "integer",
+      "min": 3,
+      "max": 12,
+      "default": 7
+    },
+    "homepage_order": {
+      "type": "integer",
+      "default": 0
     }
   }
 }
