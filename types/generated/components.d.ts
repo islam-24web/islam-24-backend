@@ -61,6 +61,8 @@ export interface BlocksCategoryStrip extends Struct.ComponentSchema {
       > &
       Schema.Attribute.DefaultTo<7>;
     see_more_label: Schema.Attribute.String;
+    source: Schema.Attribute.Enumeration<['category', 'featured-flag']> &
+      Schema.Attribute.DefaultTo<'category'>;
   };
 }
 
@@ -137,6 +139,17 @@ export interface BlocksEditorPick extends Struct.ComponentSchema {
     headline_en: Schema.Attribute.String;
     layout: Schema.Attribute.Enumeration<['two-up', 'three-up', 'magazine']> &
       Schema.Attribute.DefaultTo<'three-up'>;
+    limit: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 12;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<4>;
+    mode: Schema.Attribute.Enumeration<['hand-picked', 'flag-driven']> &
+      Schema.Attribute.DefaultTo<'hand-picked'>;
     subhead: Schema.Attribute.Text;
   };
 }
@@ -176,7 +189,9 @@ export interface BlocksHomeHero extends Struct.ComponentSchema {
         number
       > &
       Schema.Attribute.DefaultTo<5>;
-    mode: Schema.Attribute.Enumeration<['latest-featured', 'hand-picked']> &
+    mode: Schema.Attribute.Enumeration<
+      ['latest-featured', 'hand-picked', 'flag-driven']
+    > &
       Schema.Attribute.DefaultTo<'latest-featured'>;
     variant: Schema.Attribute.Enumeration<['carousel', 'single']> &
       Schema.Attribute.DefaultTo<'carousel'>;

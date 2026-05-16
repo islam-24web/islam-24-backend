@@ -1063,6 +1063,7 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     faqs: Schema.Attribute.Component<'shared.faq-item', true>;
     featured_image: Schema.Attribute.Media<'images'> &
       Schema.Attribute.Required;
+    homepage_priority: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     is_featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     lastReviewedAt: Schema.Attribute.Date;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -1086,6 +1087,11 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
       > &
       Schema.Attribute.DefaultTo<5>;
     seo: Schema.Attribute.Component<'shared.seo', false>;
+    show_in_editor_pick: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    show_in_featured_strip: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    show_in_hero: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     sources: Schema.Attribute.Component<'shared.source-citation', true>;
     title: Schema.Attribute.String &

@@ -70,6 +70,22 @@
       "type": "boolean",
       "default": false
     },
+    "show_in_hero": {
+      "type": "boolean",
+      "default": false
+    },
+    "show_in_editor_pick": {
+      "type": "boolean",
+      "default": false
+    },
+    "show_in_featured_strip": {
+      "type": "boolean",
+      "default": false
+    },
+    "homepage_priority": {
+      "type": "integer",
+      "default": 0
+    },
     "published_date": {
       "type": "date",
       "required": true

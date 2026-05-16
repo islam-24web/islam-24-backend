@@ -16,10 +16,21 @@
     "subhead": {
       "type": "text"
     },
+    "mode": {
+      "type": "enumeration",
+      "enum": ["hand-picked", "flag-driven"],
+      "default": "hand-picked"
+    },
     "articles": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::article.article"
+    },
+    "limit": {
+      "type": "integer",
+      "min": 1,
+      "max": 12,
+      "default": 4
     },
     "layout": {
       "type": "enumeration",

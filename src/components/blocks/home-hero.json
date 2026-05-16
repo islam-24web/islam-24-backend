@@ -9,7 +9,7 @@
   "attributes": {
     "mode": {
       "type": "enumeration",
-      "enum": ["latest-featured", "hand-picked"],
+      "enum": ["latest-featured", "hand-picked", "flag-driven"],
       "default": "latest-featured"
     },
     "articles": {
