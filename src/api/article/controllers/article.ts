@@ -17,7 +17,12 @@ export default factories.createCoreController(
         populate: {
           featured_image: { fields: ["url", "alternativeText", "width", "height"] },
           author_image: { fields: ["url", "alternativeText"] },
-          category: { fields: ["name", "slug"] },
+          category: {
+            fields: ["name", "slug"],
+            populate: {
+              parent: { fields: ["name", "slug"] },
+            },
+          },
           seo: {
             populate: {
               og_image: { fields: ["url", "width", "height"] },
