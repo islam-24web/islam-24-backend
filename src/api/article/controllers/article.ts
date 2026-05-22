@@ -23,6 +23,8 @@ export default factories.createCoreController(
               og_image: { fields: ["url", "width", "height"] },
             },
           },
+          faqs: true,
+          sources: true,
         },
       };
 
@@ -48,6 +50,8 @@ export default factories.createCoreController(
               og_image: { fields: ["url", "width", "height"] },
             },
           },
+          faqs: true,
+          sources: true,
         },
       };
 
@@ -72,6 +76,8 @@ export default factories.createCoreController(
             seo: {
               populate: { og_image: true },
             },
+            faqs: true,
+            sources: true,
           },
           limit: 1,
         }
