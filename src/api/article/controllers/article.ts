@@ -98,6 +98,60 @@ export default factories.createCoreController(
       return this.transformResponse(sanitizedEntity);
     },
 
+    // Custom: bulk-unpublish every article in a given category slug
+    async bulkUnpublishByCategory(ctx) {
+      const { categorySlug, confirm } = ctx.request.body ?? {};
+
+      if (!categorySlug || typeof categorySlug !== "string") {
+        return ctx.badRequest("categorySlug is required");
+      }
+      if (confirm !== `unpublish-category-${categorySlug}`) {
+        return ctx.badRequest(
+          `confirm must equal "unpublish-category-${categorySlug}"`
+        );
+      }
+
+      // Fetch all published articles in the category
+      const published = await strapi.documents("api::article.article").findMany({
+        status: "published",
+        filters: {
+          category: { slug: { $eq: categorySlug } },
+        },
+        fields: ["documentId", "slug"],
+        pagination: { pageSize: 200 },
+      });
+
+      let unpublished = 0;
+      const slugs: string[] = [];
+      for (const article of published) {
+        await strapi.documents("api::article.article").unpublish({
+          documentId: article.documentId,
+        });
+        unpublished += 1;
+        slugs.push(article.slug);
+      }
+
+      // Verify
+      const remaining = await strapi.documents("api::article.article").findMany({
+        status: "published",
+        filters: {
+          category: { slug: { $eq: categorySlug } },
+        },
+        fields: ["documentId", "slug"],
+        pagination: { pageSize: 200 },
+      });
+
+      return {
+        data: {
+          categorySlug,
+          matched: published.length,
+          unpublished,
+          remainingPublished: remaining.length,
+          slugs,
+        },
+      };
+    },
+
     async unpublishAsmaAllahSources(ctx) {
       if (ctx.request.body?.confirm !== ASMA_SOURCE_CONFIRMATION) {
         return ctx.badRequest("Missing confirmation token");

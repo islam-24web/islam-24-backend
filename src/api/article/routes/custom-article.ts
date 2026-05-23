@@ -29,5 +29,15 @@ export default {
         middlewares: [],
       },
     },
+    {
+      method: "POST",
+      path: "/maintenance/articles/bulk-unpublish-category",
+      handler: "article.bulkUnpublishByCategory",
+      config: {
+        auth: {},
+        policies: [],
+        middlewares: [],
+      },
+    },
   ],
 };
