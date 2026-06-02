@@ -49,8 +49,20 @@ export default factories.createCoreController(
       const { slug } = ctx.params;
       const locale = (ctx.query?.locale as string) || "en";
 
+      const publicVerifiedFilters = {
+          slug,
+          status: "published",
+          isPublished: true,
+          sourceUrl: { $notNull: true },
+          sourceReviewedAt: { $notNull: true },
+          $or: [
+            { applicationUrl: { $notNull: true } },
+            { applyUrl: { $notNull: true } },
+          ],
+        } as any;
+
       const entities = await strapi.entityService.findMany("api::job.job", {
-        filters: { slug, status: "active" },
+        filters: publicVerifiedFilters,
         locale,
         populate: {
           company: { populate: { logo: true } },

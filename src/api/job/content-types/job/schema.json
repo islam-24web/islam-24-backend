@@ -48,7 +48,6 @@
     },
     "externalId": {
       "type": "string",
-      "required": true,
       "unique": true,
       "pluginOptions": { "i18n": { "localized": false } }
     },
@@ -61,19 +60,99 @@
       "type": "string",
       "pluginOptions": { "i18n": { "localized": false } }
     },
+    "applicationUrl": {
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
     "referralTag": {
       "type": "string",
       "pluginOptions": { "i18n": { "localized": false } }
     },
     "datePosted": {
       "type": "datetime",
-      "required": true,
       "pluginOptions": { "i18n": { "localized": false } }
     },
     "validThrough": {
       "type": "datetime",
-      "required": true,
       "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "sourceReviewedAt": {
+      "type": "date",
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "expiresAt": {
+      "type": "date",
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "isPublished": {
+      "type": "boolean",
+      "default": false,
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "isReferral": {
+      "type": "boolean",
+      "default": false,
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "titleArabic": {
+      "type": "string",
+      "maxLength": 255,
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "originalTitle": {
+      "type": "string",
+      "maxLength": 255,
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "remoteType": {
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "contractType": {
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "payText": {
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "category": {
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "summary": {
+      "type": "text",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "responsibilities": {
+      "type": "richtext",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "requirements": {
+      "type": "richtext",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "contractDetails": {
+      "type": "richtext",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "locationEligibility": {
+      "type": "text",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "companyWebsite": {
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "seoTitle": {
+      "type": "string",
+      "maxLength": 60,
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "seoDescription": {
+      "type": "string",
+      "maxLength": 160,
+      "pluginOptions": { "i18n": { "localized": true } }
     },
     "employmentType": {
       "type": "enumeration",
@@ -162,7 +241,10 @@
         "expired",
         "rejected_halal",
         "rejected_quality",
-        "draft"
+        "draft",
+        "under_review",
+        "published",
+        "closed"
       ],
       "default": "draft",
       "pluginOptions": { "i18n": { "localized": false } }
