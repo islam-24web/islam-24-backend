@@ -114,9 +114,8 @@ async function main() {
   };
 
   const ar = {
-    ...shared,
-    locale: "ar",
     title: "أخصائي تنسيق وإعداد مستندات وورد",
+    slug,
     titleArabic: "أخصائي تنسيق وإعداد مستندات وورد",
     category: "Document Specialist / AI Training / Remote Work",
     remoteType: "عن بُعد بالكامل",
