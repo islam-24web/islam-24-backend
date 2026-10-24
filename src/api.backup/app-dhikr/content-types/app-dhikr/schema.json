@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "app_dhikrs",
+  "info": {
+    "singularName": "app-dhikr",
+    "pluralName": "app-dhikrs",
+    "displayName": "App Dhikr"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "text": {
+      "type": "text",
+      "required": true
+    },
+    "count": {
+      "type": "integer",
+      "default": 1
+    },
+    "label": {
+      "type": "string"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "morning",
+        "evening",
+        "after_salah",
+        "sleep",
+        "general"
+      ]
+    },
+    "order": {
+      "type": "integer"
+    }
+  }
+}

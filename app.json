@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "e628984e-830e-466f-9a92-1e8b9f708e22"
+      }
+    },
+    "android": {
+      "package": "com.islam24.backend"
+    }
+  }
+}

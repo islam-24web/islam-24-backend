@@ -6,7 +6,7 @@ export default ({ env }) => {
   const connections = {
     sqlite: {
       connection: {
-        filename: path.resolve("/Users/islam/islam-24/backend/.tmp/data.db"),
+        filename: path.resolve(process.cwd(), env("DATABASE_FILENAME", ".tmp/data.db")),
       },
       useNullAsDefault: true,
     },

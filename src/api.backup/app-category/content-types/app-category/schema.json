@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "app_categories",
+  "info": {
+    "singularName": "app-category",
+    "pluralName": "app-categories",
+    "displayName": "App Category"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "color": {
+      "type": "string"
+    },
+    "order": {
+      "type": "integer"
+    },
+    "domain": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::app-domain.app-domain",
+      "inversedBy": "app_categories"
+    },
+    "app_tasks": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::app-task.app-task",
+      "mappedBy": "category"
+    }
+  }
+}

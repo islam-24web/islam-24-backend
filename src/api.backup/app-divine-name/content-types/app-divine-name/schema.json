@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "app_divine_names",
+  "info": {
+    "singularName": "app-divine-name",
+    "pluralName": "app-divine-names",
+    "displayName": "App Divine Name"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "meaning": {
+      "type": "string"
+    },
+    "explanation": {
+      "type": "richtext"
+    },
+    "order": {
+      "type": "integer"
+    }
+  }
+}

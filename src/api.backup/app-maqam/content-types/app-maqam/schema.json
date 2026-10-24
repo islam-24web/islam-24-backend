@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "app_maqams",
+  "info": {
+    "singularName": "app-maqam",
+    "pluralName": "app-maqams",
+    "displayName": "App Maqam"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "num": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "explanation": {
+      "type": "richtext"
+    },
+    "order": {
+      "type": "integer"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "job_subscribers",
+  "info": {
+    "singularName": "job-subscriber",
+    "pluralName": "job-subscribers",
+    "displayName": "Job Subscriber",
+    "description": "Email subscribers for the daily job digest. Token-gated confirmation + unsubscribe."
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "email": {
+      "type": "email",
+      "required": true,
+      "unique": true
+    },
+    "subscribedCategories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::job-category.job-category"
+    },
+    "confirmedAt": {
+      "type": "datetime"
+    },
+    "unsubscribedAt": {
+      "type": "datetime"
+    },
+    "confirmationToken": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "private": true,
+      "minLength": 32,
+      "maxLength": 128
+    },
+    "preferredLocale": {
+      "type": "enumeration",
+      "enum": ["en", "ar"],
+      "default": "en",
+      "required": true
+    },
+    "lastDigestSentAt": {
+      "type": "datetime"
+    }
+  }
+}
